@@ -64,7 +64,7 @@ impl<T> HomogeneousTuple3<T> for (T, T, T) {
     }
 
     fn iter_mut<'a>(&'a mut self) -> MutItems<'a, T> {
-        self.as_mut_slice().mut_iter()
+        self.as_mut_slice().iter_mut()
     }
 
     fn get<'a>(&'a self, index: uint) -> Option<&'a T> {
@@ -350,7 +350,7 @@ impl<T> VecPerParamSpace<T> {
 
     pub fn sort(t: Vec<T>, space: |&T| -> ParamSpace) -> VecPerParamSpace<T> {
         let mut result = VecPerParamSpace::empty();
-        for t in t.move_iter() {
+        for t in t.into_iter() {
             result.push(space(&t), t);
         }
         result
@@ -394,7 +394,7 @@ impl<T> VecPerParamSpace<T> {
     pub fn replace(&mut self, space: ParamSpace, elems: Vec<T>) {
         // FIXME (#15435): slow; O(n^2); could enhance vec to make it O(n).
         self.truncate(space, 0);
-        for t in elems.move_iter() {
+        for t in elems.into_iter() {
             self.push(space, t);
         }
     }
@@ -420,7 +420,7 @@ impl<T> VecPerParamSpace<T> {
 
     pub fn get_mut_slice<'a>(&'a mut self, space: ParamSpace) -> &'a mut [T] {
         let (start, limit) = self.limits(space);
-        self.content.mut_slice(start, limit)
+        self.content.slice_mut(start, limit)
     }
 
     pub fn opt_get<'a>(&'a self,
