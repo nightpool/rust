@@ -3133,13 +3133,17 @@ ten_times(|j| println!("hello, {}", j));
 ### While loops
 
 ~~~~ {.ebnf .gram}
-while_expr : "while" no_struct_literal_expr '{' block '}' ;
+while_expr : [ lifetime ':' ] "while" no_struct_literal_expr '{' block '}' ;
 ~~~~
 
 A `while` loop begins by evaluating the boolean loop conditional expression.
 If the loop conditional expression evaluates to `true`, the loop body block
 executes and control returns to the loop conditional expression. If the loop
 conditional expression evaluates to `false`, the `while` expression completes.
+
+A `while` expression may optionally have a _label_. If a label is present,
+then labeled `break` and `continue` expressions nested within this loop may exit out of this loop or return control to its head.
+See [Break expressions](#break-expressions) and [Continue expressions](#continue-expressions).
 
 An example:
 
@@ -3200,7 +3204,7 @@ A `continue` expression is only permitted in the body of a loop.
 ### For expressions
 
 ~~~~ {.ebnf .gram}
-for_expr : "for" pat "in" no_struct_literal_expr '{' block '}' ;
+for_expr : [ lifetime ':' ] "for" pat "in" no_struct_literal_expr '{' block '}' ;
 ~~~~
 
 A `for` expression is a syntactic construct for looping over elements
@@ -3230,6 +3234,9 @@ for i in range(0u, 256) {
     bar(i);
 }
 ~~~~
+
+A `for` loop may optionally have a _label_. This works similarly to `while` and `loop` labels.
+See [Break expressions](#break-expressions) and [Continue expressions](#continue-expressions) for more details.
 
 ### If expressions
 
