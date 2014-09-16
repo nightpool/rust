@@ -555,8 +555,6 @@ Named lifetime notation can also be used to control the flow of execution:
 }
 ~~~
 
-> *Note:* Labelled breaks are not currently supported within `while` loops.
-
 Named labels are hygienic and can be used safely within macros.
 See the macros guide section on hygiene for more details.
 
